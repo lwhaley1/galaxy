@@ -1,6 +1,7 @@
 build/
 CMakeFiles/
 .vscode/
+.vs/
 Testing/
 
 DartConfiguration.tcl

@@ -1,8 +1,14 @@
 #pragma once
 
 #include "SDL.h"
+#include "FrameData.h"
+#include "KeyEvent.h"
+#include "IEventResponse.h"
+#include "Renderer.h"
 
 #include <string>
+#include <map>
+#include <vector>
 
 namespace UI
 {
@@ -14,23 +20,21 @@ public:
     virtual ~Window();
 
     void ShowAndWait();
+    void AddKeyListener(const Events::KeyEvent &key, Events::IEventResponse& responder);
+    void FullScreen();
 
 private:
-    struct FrameData
-    {
-        float t;
-        float dt;
-        float current;
-        float accumulator;
-    };
-
+    std::map<Events::KeyEvent, std::vector<Events::IEventResponse*>> _keyEventListeners;
     SDL_Window *_window = NULL;
+    Renderer *_renderer = NULL;
     FrameData _frameData;
     bool _isQuit = false;
 
     void PollEvents();
     void HandleEvent(SDL_Event &e);
     void HandleDeltaTime();
+    void HandleFPS();
+    void InitFrameData();
 };
 
 }
