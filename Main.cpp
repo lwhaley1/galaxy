@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "Window.h"
 #include "KeyEvent.h"
 

@@ -1,9 +1,15 @@
 #include "Renderer.h"
+#include "SDL_ttf.h"
+
+#include <assert.h>
 
 namespace UI
 {
     Renderer::Renderer(SDL_Renderer *renderer)
     {
+        int init = TTF_Init();
+        assert(init >= 0);
+
         _renderer = renderer;
     }
 
