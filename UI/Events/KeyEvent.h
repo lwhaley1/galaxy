@@ -14,7 +14,8 @@ enum KeyEvent
     W     = SDL_KeyCode::SDLK_w,
     A     = SDL_KeyCode::SDLK_a,
     S     = SDL_KeyCode::SDLK_s,
-    D     = SDL_KeyCode::SDLK_d
+    D     = SDL_KeyCode::SDLK_d,
+    F1    = SDL_KeyCode::SDLK_F1
 };
 
 }

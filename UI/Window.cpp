@@ -7,10 +7,12 @@ namespace UI
 {
     Window::Window(const std::string &title, int width, int height)
     {
+        _title = title;
+
         int result = SDL_Init(SDL_INIT_VIDEO);
         assert(result >= 0);
 
-        _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+        _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
         assert(_window != NULL);
 
         SDL_Renderer *renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
@@ -24,10 +26,24 @@ namespace UI
     Window::~Window()
     {
         delete _renderer;
-        _renderer = NULL;
+        _renderer = nullptr;
 
         SDL_DestroyWindow(_window);
         SDL_Quit();
+    }
+
+    int Window::GetWidth()
+    {
+        int width, height;
+        SDL_GetWindowSize(_window, &width, &height);
+        return width;
+    }
+
+    int Window::GetHeight()
+    {
+        int width, height;
+        SDL_GetWindowSize(_window, &width, &height);
+        return height;
     }
 
     void Window::FullScreen()
@@ -44,7 +60,12 @@ namespace UI
             HandleFPS();
             
             _renderer->Clear();
-            _renderer->DrawCircle(300, 300, 100);
+            if (_isDebug)
+            {
+                DrawDebugInformation();
+            }
+
+
             _renderer->Render();
         }
     }
@@ -53,6 +74,24 @@ namespace UI
     {
         std::vector<Events::IEventResponse*> &responders = _keyEventListeners[key];
         responders.push_back(&responder);
+    }
+
+    void Window::SetIcon(const std::string &imgPath)
+    {
+        SDL_Surface *surface = _renderer->GetImageSurface(imgPath);
+        SDL_SetWindowIcon(_window, surface);
+        SDL_FreeSurface(surface);
+    }
+
+    void Window::DrawDebugInformation()
+    {
+        const int debug_topright_width = 125;
+
+        // Draw FPS in top right.
+        _renderer->DrawText(GetWidth() - debug_topright_width, 10, "FPS: " + std::to_string(_frameData.fps_current));
+
+        // Draw DEBUG mode in top left.
+        _renderer->DrawText(10, 10, _title + ": DEBUG MODE ENABLED");
     }
 
     void Window::HandleFPS()
