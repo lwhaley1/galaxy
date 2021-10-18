@@ -9,6 +9,8 @@ enable_testing()
 
 include_directories(
     Include
+    Models
+    Models/Geometry
     UI
     UI/Events
     UI/Text
@@ -25,6 +27,7 @@ find_library(SDL_TTF_LIBRARY
 target_link_libraries(galaxy ${SDL_LIBRARY} ${SDL_TTF_LIBRARY})
 
 add_subdirectory(UI)
+add_subdirectory(Models)
 
 add_custom_target(SDL_BINARIES
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_LIBRARY_PATH}/libfreetype-6.dll ${CMAKE_BINARY_DIR}/Debug/libfreetype-6.dll

@@ -1,21 +1,17 @@
 #include <iostream>
 
-#include "FontCache.h"
-#include "SDL.h"
-#include "Window.h"
-#include "KeyEvent.h"
 #include "Windows.h"
-#include "DebugEventResponse.h"
+#include "Rect.h"
+
+#define PI 3.1415926535F
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
-    UI::Window window ("Galaxy", 1280, 720);
-    window.SetIcon("Assets/Images/icon.bmp");
+    Models::Geometry::Rect a (0, 2, 2, 2, PI / 4);
+    Models::Geometry::Rect b (0, 0, 2, 2, 0);
 
-    UI::Events::DebugEventResponse debug (window);
-    window.AddKeyListener(UI::Events::KeyEvent::F1, debug);
+    bool isColliding = a.Intersects(b);
 
-    window.ShowAndWait();
     return 0;
 }
 
