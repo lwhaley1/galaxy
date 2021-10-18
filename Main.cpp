@@ -7,8 +7,8 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
-    Models::Geometry::Rect a (0, 2, 2, 2, PI / 4);
-    Models::Geometry::Rect b (0, 0, 2, 2, 0);
+    Models::Geometry::Rect a (0, 0, 1, 1, PI / 4);
+    Models::Geometry::Rect b (0, 0, 1, 1, 0);
 
     bool isColliding = a.Intersects(b);
 

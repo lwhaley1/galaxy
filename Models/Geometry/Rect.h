@@ -31,6 +31,9 @@ private:
   float _w;
   float _h;
   float _rotation;
+
+  bool IntersectX(const Rect &o) const;
+  bool IntersectY(const Rect &o) const;
 };
 
 }
